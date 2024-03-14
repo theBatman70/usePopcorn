@@ -1,4 +1,5 @@
-import { average } from "../App";
+const average = (arr) =>
+  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function Summary({ watched }) {
   const avgImdbRating = average(
@@ -28,7 +29,7 @@ export default function Summary({ watched }) {
         </p>
         <p>
           <span>⏳</span>
-          <span>{avgRuntime} min</span>
+          <span>{Math.round(avgRuntime)} min</span>
         </p>
       </div>
     </div>

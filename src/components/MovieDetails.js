@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { KEY } from "./App";
 import Loader from "./utils/Loader";
 import StarRating from "./utils/StarRating";
+import { useKey } from "./utils/customHooks/useKey";
 
 export default function MovieDetails({
   selectedId,
@@ -9,17 +10,11 @@ export default function MovieDetails({
   onAddWatched,
   isWatched,
   watchedUserRating,
-  onSetRating,
 }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState();
   const [userRating, setUserRating] = useState();
-
-  // const sum = ratings.reduce(
-  //   (acc, rating) => acc + parseFloat(rating.value),
-  //   0
-  // );
-  // const avgRating = sum / ratings.length;
+  const countRef = useRef(0);
 
   useEffect(
     function () {
@@ -65,20 +60,13 @@ export default function MovieDetails({
     [selectedId, onCloseMovie]
   );
 
+  useKey("Escape", onCloseMovie);
+
   useEffect(
     function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          onCloseMovie();
-        }
-      }
-      document.addEventListener("keydown", callback);
-
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
+      if (userRating) countRef.current++;
     },
-    [onCloseMovie]
+    [userRating]
   );
 
   const {
@@ -130,8 +118,6 @@ export default function MovieDetails({
             </div>
           </header>
 
-          {/* <p>{avgRating}</p> */}
-
           <section>
             <div className="rating">
               {!isWatched ? (
@@ -176,6 +162,7 @@ export default function MovieDetails({
       imdbID,
       runtime,
       userRating,
+      countRatingDecisions: countRef,
     });
   }
 }
