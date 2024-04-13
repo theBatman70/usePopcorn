@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { KEY } from "../../App";
 
 export function useMovies(query) {
   const [movies, setMovies] = useState([]);
@@ -14,7 +13,7 @@ export function useMovies(query) {
           setError("");
           setIsLoading(true);
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&s=${query}`,
             { signal: controller.signal }
           );
 

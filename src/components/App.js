@@ -11,8 +11,6 @@ import Loader from "./utils/Loader";
 import { useMovies } from "./utils/customHooks/useMovies";
 import { useLocalStorageState } from "./utils/customHooks/useLocalStorageState";
 
-export const KEY = "eca84296";
-
 export default function App() {
   const [watchedList, setWatchedList] = useLocalStorageState([], "watched");
   const [query, setQuery] = useState("");

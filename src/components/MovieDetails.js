@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import { KEY } from "./App";
 import Loader from "./utils/Loader";
 import StarRating from "./utils/StarRating";
 import { useKey } from "./utils/customHooks/useKey";
@@ -21,7 +20,7 @@ export default function MovieDetails({
       async function fetchMovieDetails() {
         setIsLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&i=${selectedId}`
         );
         const data = await res.json();
         const {
